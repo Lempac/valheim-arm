@@ -18,12 +18,15 @@ services:
       SERVER_BACKUP_LONG: ${SERVER_BACKUP_LONG:-43200}
       ENABLE_PLUGINS: ${ENABLE_PLUGINS:-false}
       ENABLE_CROSSPLAY: ${ENABLE_CROSSPLAY:-false}
-      
+    
     volumes:
-      # Bind mount, to access the files directly on the host
-      - ./valheim/server/:/root/valheim-server
-      - ./valheim/persistentdata/:/root/.config/unity3d/IronGate/Valheim
+      - valheim-server:/root/valheim-server
+      - valheim-data:/root/.config/unity3d/IronGate/Valheim
     #This is required for ntsync to work inside Docker.
     #If ntsync support is not enabled in your Linux kernel, comment out this section, otherwise Docker Compose won't start.
 #    devices:
 #      - /dev/ntsync:/dev/ntsync
+
+volumes:
+  valheim-server:
+  valheim-data:

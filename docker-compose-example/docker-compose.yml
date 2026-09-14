@@ -8,11 +8,17 @@ services:
       - "2457:2457/udp"
       - "2458:2458/udp"
     environment:
-      - SERVER_NAME=Valheim_Server
-      - SERVER_WORLD=tsx_world
-      - SERVER_PASSWORD=123456780
-      - ENABLE_PLUGINS=false
-      - ENABLE_CROSSPLAY=false
+      SERVER_NAME: ${SERVER_NAME}
+      SERVER_WORLD: ${SERVER_WORLD}
+      SERVER_PASSWORD: ${SERVER_PASSWORD}
+      SERVER_VISIBILITY: ${SERVER_VISIBILITY:-0}
+      SERVER_SAVE_INTERVAL: ${SERVER_SAVE_INTERVAL:-1800}
+      SERVER_BACKUPS: ${SERVER_BACKUPS:-4}
+      SERVER_BACKUP_SHORT: ${SERVER_BACKUP_SHORT:-7200}
+      SERVER_BACKUP_LONG: ${SERVER_BACKUP_LONG:-43200}
+      ENABLE_PLUGINS: ${ENABLE_PLUGINS:-false}
+      ENABLE_CROSSPLAY: ${ENABLE_CROSSPLAY:-false}
+      
     volumes:
       # Bind mount, to access the files directly on the host
       - ./valheim/server/:/root/valheim-server

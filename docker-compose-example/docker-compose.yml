@@ -3,6 +3,12 @@ services:
     image: tsxcloud/valheim-arm:latest
     restart: unless-stopped
     stop_grace_period: 40s
+
+    cpus: "3.0"
+    mem_limit: 8g
+    mem_reservation: 4g
+    pids_limit: 512
+    
     ports:
       - "2456:2456/udp"
       - "2457:2457/udp"

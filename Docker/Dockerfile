@@ -1,20 +1,13 @@
-FROM tsxcloud/steamcmd-wine-ntsync:latest
+FROM tsxcloud/steamcmd-wine-ntsync:10.20-arm64-box@sha256:623c85deed796bb37a718552b50bb98c8cb77901d6b6af4e01eeba9cb89da472
 
-RUN apt update
-RUN apt install -y \
+ARG DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
         libatomic1 \
-        libpulse-dev \
-        libpulse0
-
-ENV ENABLE_PLUGINS="false"
-ENV SERVER_NAME="Valheim_Server"
-ENV SERVER_WORLD="tsx_world"
-ENV SERVER_PASSWORD=
-ENV SERVER_VISIBILITY=1
-ENV SERVER_SAVE_INTERVAL=1800
-ENV SERVER_BACKUPS=4
-ENV SERVER_BACKUP_SHORT=7200
-ENV SERVER_BACKUP_LONG=43200
+        libpulse0 \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /root
 
@@ -22,10 +15,8 @@ COPY server/ defaults/server/
 
 COPY emulators.rc .
 
-COPY --chmod=775 load_emulators_env.sh /load_emulators_env.sh
+COPY --chmod=0755 load_emulators_env.sh /load_emulators_env.sh
+COPY --chmod=0755 print_app_versions.sh /print_app_versions.sh
+COPY --chmod=0755 entrypoint.sh /root/entrypoint.sh
 
-COPY --chmod=775 print_app_versions.sh /print_app_versions.sh
-
-COPY --chmod=775 entrypoint.sh ./
-
-ENTRYPOINT ["./entrypoint.sh"]
+ENTRYPOINT ["/root/entrypoint.sh"]

@@ -4,6 +4,12 @@
         <name>BepInEx.Preloader</name>
     </assembly>
     <members>
+        <member name="F:BepInEx.Preloader.PreloaderRunner.XTermFixException">
+            <summary>
+                Exceptions thrown by XTermFix.Apply() and ConsoleSetOutFix.Apply() during early preloader init,
+                stored for deferred logging in <see cref="M:BepInEx.Preloader.Preloader.Run"/> once the logger is available.
+            </summary>
+        </member>
         <member name="T:BepInEx.Preloader.EnvVars">
             <summary>
             Doorstop environment variables, passed into the BepInEx preloader.
